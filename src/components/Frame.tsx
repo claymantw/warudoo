@@ -1,43 +1,89 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "~/components/ui/card";
+import { sdk } from '@farcaster/frame-sdk'
+import { farcasterFrame as frameConnector } from '@farcaster/frame-wagmi-connector'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { WagmiProvider, useAccount, useConnect, useSignMessage } from 'wagmi'
+import { config } from './wagmiConfig'
 
-import { Label } from "~/components/ui/label";
-import { useFrameSDK } from "~/hooks/useFrameSDK";
+const queryClient = new QueryClient()
 
-function ExampleCard() {
+function App() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Welcome to the Frame Template</CardTitle>
-        <CardDescription>
-          This is an example card that you can customize or remove
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Label>Place content in a Card here.</Label>
-      </CardContent>
-    </Card>
-  );
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <AppInner />
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
 }
 
-export default function Frame() {
-  const { isSDKLoaded } = useFrameSDK();
+function AppInner() {
+  useEffect(() => {
+    sdk.actions.ready()
+  }, [])
 
-  if (!isSDKLoaded) {
-    return <div>Loading...</div>;
+  return (
+    <>
+      <div>Simple Wagmi React Frame Example</div>
+      <ConnectMenu />
+    </>
+  )
+}
+
+function ConnectMenu() {
+  const { isConnected, address } = useAccount()
+  const { connect } = useConnect()
+
+  if (isConnected) {
+    return (
+      <>
+        <div>Connected account:</div>
+        <div>{address}</div>
+        <SignButton />
+      </>
+    )
   }
 
   return (
-    <div className="w-[300px] mx-auto py-2 px-2">
-      <ExampleCard />
-    </div>
-  );
+    <button
+      type="button"
+      onClick={() => {
+        connect({ connector: frameConnector() }) 
+      }}
+    >
+      Connect
+    </button>
+  )
 }
+
+function SignButton() {
+  const { signMessage, isPending, data, error } = useSignMessage()
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => signMessage({ message: 'hello world' })}
+        disabled={isPending}
+      >
+        {isPending ? 'Signing...' : 'Sign message'}
+      </button>
+      {data && (
+        <>
+          <div>Signature</div>
+          <div>{data}</div>
+        </>
+      )}
+      {error && (
+        <>
+          <div>Error</div>
+          <div>{error.message}</div>
+        </>
+      )}
+    </>
+  )
+}
+
+export default App
