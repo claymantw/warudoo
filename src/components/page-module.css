@@ -1,0 +1,128 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #003087;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.connectContainer {
+  margin: 20px 0;
+}
+
+.connected {
+  margin: 20px 0;
+}
+
+.text {
+  font-size: 1.2rem;
+  color: #003087;
+  font-weight: 400;
+  margin: 10px 0;
+}
+
+.gameContainer {
+  margin-top: 20px;
+}
+
+.word {
+  font-size: 2.5rem;
+  letter-spacing: 5px;
+  margin: 20px 0;
+  color: #003087;
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 1.2rem;
+  color: #005bb5;
+  font-weight: 400;
+  margin: 10px 0;
+  font-style: italic;
+}
+
+.input {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.inputBox {
+  padding: 10px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  width: 100px;
+  text-align: center;
+  border: 2px solid #003087;
+  border-radius: 5px;
+  background-color: #f0f7ff;
+  color: #003087;
+  font-weight: 400;
+}
+
+.inputBox::placeholder {
+  color: #6688cc;
+  font-weight: 400;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #005bb5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #003087;
+}
+
+.button:disabled {
+  background-color: #6688cc;
+  cursor: not-allowed;
+}
+
+.message {
+  font-size: 1.5rem;
+  color: #003087;
+  margin: 20px 0;
+  font-weight: 400;
+}
+
+.signContainer {
+  margin: 20px 0;
+}
+
+.mintContainer {
+  margin: 20px 0;
+}
+
+.result {
+  margin-top: 10px;
+}
+
+.signature {
+  font-size: 1rem;
+  color: #005bb5;
+  font-weight: 400;
+  word-break: break-all;
+}
+
+.error {
+  font-size: 1rem;
+  color: #003087;
+  font-weight: 400;
+}
